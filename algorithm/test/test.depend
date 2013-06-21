@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1371614352 source:/home/jefby/workplace/Algorithm_Test/source/range/bubble.cpp
+	<stdio.h>
+	<ctype.h>
+
