@@ -142,24 +142,26 @@ char * mystrtok(char * str,const char *delim)
 {
 	static char * last = NULL;//用于进行下次分割做准备
 	char * s = NULL,*d = delim;//初始化
+	int len = 0;
 	assert(delim != NULL );
 	if( (str == NULL) && ((str=last) == NULL))
 		return NULL;
 	s = str;
+	len = mystrlen(delim);
 
 	while(*s){
 		d = delim;
 		while(*d){
-			if(*s == *d){//有问题，单个字符可以，多字符不行
-				last =  s + 1;
-				if(s - str == 0){
-					str = last;
-					break;
-				}
-				*(str+(s-str))='\0';
-				return str;
+			while(*s && *d && *s == *d){//判断如果相等一直递增指针
+				++s;
+				++d;
 			}
-			++d;
+			if(*d == '\0' ){
+				*(str+(s-str-len)) = '\0';
+				last = s;
+				return str;
+			}else
+				++d;
 		}//while(*d)
 		++s;//递增s指针
 	}
@@ -173,7 +175,7 @@ int main()
 	char substr[]="h";
 	char str1[]="aaaabcceaedb";
 	char str2[100]="abcdefghijklmn";
-	char str3[]="abc,def*,ghi*,jkl";
+	char str3[]="abcdef-,ghi-,jkl-,";
 	char *p = NULL;
 	res = mystrstr(str,substr);
 	if(res != -1)
@@ -190,11 +192,11 @@ int main()
 	for(i=0;i<100;++i)
 		printf("%c ",str2[i]);
 	
-	p = strtok(str3,",");
+	p = strtok(str3,"-,");
 	printf("strtok : 1 %s\n",p);
-	p = strtok(NULL,",");
+	p = strtok(NULL,"-,");
 	printf("strtok : 2 %s\n",p);
-	p = strtok(NULL,",");
+	p = strtok(NULL,"-,");
 	printf("strtok : 3 %s\n",p);
 	getchar();
 	return 0;
