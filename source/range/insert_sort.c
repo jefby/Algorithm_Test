@@ -1,3 +1,7 @@
+/*
+         插入排序：
+         复杂度是O(n*n)
+*/
 #include <stdio.h>
 
 void insert_sort(int *a,int n)
@@ -5,6 +9,7 @@ void insert_sort(int *a,int n)
 	int i,j,key;
 	for(j=1;j<n;++j){
 		key = a[j];
+//insert A[j] into the sorted sequence A[0...j-1]
 		for(i=j-1;i>=0&&a[i]>key;--i)
 			a[i+1]=a[i];
 		a[i+1] = key;
