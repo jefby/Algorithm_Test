@@ -136,7 +136,6 @@ void * mymemmove(void * dst,const void *src,size_t count)
 	@delim : 要分割的字符串,也可以称为分割符
 	返回值：
 	返回分割后的字符串指针
-	暂时未完成
 */
 char * mystrtok(char * str,const char *delim)
 {
@@ -156,15 +155,17 @@ char * mystrtok(char * str,const char *delim)
 				++s;
 				++d;
 			}
-			if(*d == '\0' ){
+			if(*d == '\0' ){//判断假如匹配字符串到达末尾，则截断原始字符串。
 				*(str+(s-str-len)) = '\0';
-				last = s;
+				last = s;//记录下一次匹配字符串的起始地址
 				return str;
 			}else
-				++d;
+				++d;//不匹配
 		}//while(*d)
-		++s;//递增s指针
-	}
+		++s;
+	}//while(*s)
+	if(last != NULL && *s == '\0' )//处理str字符串未完，而匹配已经完成的情况
+		return last;
 	return NULL;
 
 }
@@ -175,7 +176,7 @@ int main()
 	char substr[]="h";
 	char str1[]="aaaabcceaedb";
 	char str2[100]="abcdefghijklmn";
-	char str3[]="abcdef-,ghi-,jkl-,";
+	char str3[]="abcdef-,ghi-,jkl";
 	char *p = NULL;
 	res = mystrstr(str,substr);
 	if(res != -1)
@@ -191,13 +192,12 @@ int main()
 	mymemmove(str2+2,str2,20);
 	for(i=0;i<100;++i)
 		printf("%c ",str2[i]);
-	
-	p = strtok(str3,"-,");
-	printf("strtok : 1 %s\n",p);
-	p = strtok(NULL,"-,");
-	printf("strtok : 2 %s\n",p);
-	p = strtok(NULL,"-,");
-	printf("strtok : 3 %s\n",p);
+	p = mystrtok(str3,"-,");//根据"-,"符号来分割字符串str3
+	while(p!= NULL){
+		printf("strtok : %s\n",p);
+		p = mystrtok(NULL,"-,");
+	}//while(p!=NULL)
+
 	getchar();
 	return 0;
 }
