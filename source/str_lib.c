@@ -164,10 +164,77 @@ char * mystrtok(char * str,const char *delim)
 		}//while(*d)
 		++s;
 	}//while(*s)
-	if(last != NULL && *s == '\0' )//处理str字符串未完，而匹配已经完成的情况
-		return last;
+	if(last != NULL && *s == '\0' ){//处理str字符串未完，而匹配已经完成的情况
+		s = last;//增加最后一个指针的处理,s保存last的值,last=>NULL
+		last = NULL;
+		return s;
+	}
 	return NULL;
 
+}
+
+/*
+	函数功能：返回第一个不在指定字符串中出现的字符位置
+	参数说明
+	@str：字符串指针
+	@accept : 指定字符串
+	返回值：
+	int类型
+*/
+int mystrspn(const char *str,const char *accept)
+{
+	const char *p1 = str;
+	const char *p2 = accept;
+	assert(str!=NULL&&accept!=NULL);
+	
+	while(*p1 && *p2 && *p1 == *p2){
+		++p1;
+		++p2;
+	}
+	return (p1 - str);
+}
+/*
+	函数功能：字符串比较函数
+	参数说明：
+	@str1：字符串1
+	@str2：字符串2
+	返回：
+		比较结果，str1-str2
+*/
+int mystrcmp(const char *str1,const char *str2)
+{
+	assert(str1 != NULL && str2 != NULL);
+	while(*str1 && *str2 && *str1 == *str2){
+		++str1;
+		++str2;
+	}
+	return (*str1-*str2);
+}
+
+/*
+	函数功能：依次检验字符串s1中的字符，当被检验字符在字符串s2中也包含时，则停止检验，并返回该字符开始的字符串指针，空字符NULL不包括在内。如果不满足此条件，则返回NULL
+	参数说明：
+	@s1	：字符串1
+	@s2 ：字符串2
+*/
+char *mystrpbrk(const char *s1,const char *s2)
+{
+	const char * p2 = NULL,*p1 = NULL;
+	unsigned char map[256]={0};
+	assert(s1 != NULL && s2 != NULL);
+	//扫描字符串2，构建哈希表
+	p2 = s2;
+	while(*p2){
+		map[*p2] = 1;
+		++p2;
+	}
+	p1 = s1;
+	while(*p1){
+		if(map[*p1])
+			return p1;
+		++p1;
+	}
+	return NULL;
 }
 int main()
 {
@@ -193,11 +260,16 @@ int main()
 	for(i=0;i<100;++i)
 		printf("%c ",str2[i]);
 	p = mystrtok(str3,"-,");//根据"-,"符号来分割字符串str3
-	while(p!= NULL){
+	while(p != NULL){
 		printf("strtok : %s\n",p);
 		p = mystrtok(NULL,"-,");
 	}//while(p!=NULL)
-
+	res = mystrspn(str1,"aaa");
+	printf("mystrspn %d\n",res);
+	res = mystrcmp("str1","str");
+	printf("\"str1\" %d \"str2\"\n",res);
+	p = strpbrk("str3","actdb");
+	printf("mystrpbrk %s\n",p);
 	getchar();
 	return 0;
 }
