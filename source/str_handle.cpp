@@ -20,7 +20,7 @@ char res[5005];
 int main()
 {
 	int i = 0,len = 0,j=0;
-	scanf("%s",&str);
+	scanf("%s",str);//修改原来的&str（错误）
 	len = strlen(str);
 	if(len > 20)
 		len = 20;

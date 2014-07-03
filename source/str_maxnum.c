@@ -14,7 +14,7 @@ unsigned char frq[10];
 int main()
 {
 	int i=0,len=0,max=0;
-	scanf("%s",&str);
+	scanf("%s",str);
 	len = strlen(str);
 	if(len > 20)
 		len = 20;
