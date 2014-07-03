@@ -5,7 +5,7 @@
 	输出描述
 	一行，一个数字
 	输入样例：
-	a177d298u29dee0
+	a0177d298u29dee0
 	输出样例：
 	177298290
 */
@@ -32,18 +32,18 @@ int main()
 		}//if(ch >= '0' && ch <= '9')
 	}//for
 #endif
-	scanf("%s",&str);
+	scanf("%s",str);
 	len = strlen(str);
 	if(len > 20)//处理大于20的情况
 		len = 20;
 	for(i=0;i<len;++i){
-		if(str[i]>='0'&&str[i]<='9'){
-			if(str[i] == '0' && !flag){//前导'0'
-				flag = 1;
-				continue;
-			}
+		if(str[i]>='1'&&str[i]<='9'){
+			flag = 1;
 			printf("%c",str[i]);
-		}
+		}else if(str[i]=='0' && flag != 0 )//非前导0
+			printf("%c",str[i]);
+		else//前导0
+			continue;
 	}
 	fflush(stdin);
 	getchar();
