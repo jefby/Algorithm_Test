@@ -5,6 +5,7 @@
 */
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 
 typedef int ElementType;
@@ -32,7 +33,7 @@ void ListInit(struct ListNode **head)
 */
 ListNode* ListInsert(struct ListNode *p,ElementType val)
 {
-	ListNode * tmp = (ListNode*)malloc(sizeof(struct ListNode));
+	struct ListNode * tmp = (ListNode*)malloc(sizeof(struct ListNode));
 	tmp->value = val;
 	tmp->next = p;
 	p = tmp;
@@ -47,7 +48,7 @@ ListNode* ListInsert(struct ListNode *p,ElementType val)
 */
 void ListInsertList(struct ListNode *p,struct ListNode *insert)
 {
-	ListNode * tmp = NULL;
+	struct ListNode * tmp = NULL;
 	if(!p)
 		p = insert;
 	else{
@@ -63,7 +64,7 @@ void ListInsertList(struct ListNode *p,struct ListNode *insert)
 */
 void PrintList(struct ListNode *head)
 {
-	ListNode * p = head;
+	struct ListNode * p = head;
 	while(p!=NULL){
 		printf("%d ",p->value);
 		p = p->next ;
@@ -86,10 +87,13 @@ void buildList(struct ListNode **head,ElementType * a,int len)
 }
 /*
 	函数功能：寻找单链表的倒数第k个节点，并输出此节点值
+	参数说明：
+	@heaed：链表的头指针
+	@k：倒数第k个节点
 */
 ListNode* SearchKelem(ListNode*head,int k)
 {
-	ListNode *p1 = NULL,*p2 = NULL;
+	struct ListNode *p1 = NULL,*p2 = NULL;
 	int i = 0;
 	p1 = head;
 	p2 = head;
@@ -104,14 +108,16 @@ ListNode* SearchKelem(ListNode*head,int k)
 	}else//如果k小于链表的元素个数则输出NULL
 		return NULL;
 }
-
 /*
 	函数功能：判断相交两个链表的第一个相交节点，暂时假设链表均为无环链表
+	参数说明：
+	@head1：链表1
+	@head2：链表2
 */
-ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
+struct ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
 {
 	int k = 0,i =0,j=0;
-	ListNode *p1 = head1,*p2 = head2,*shortp=NULL,*longp=NULL;
+	struct ListNode *p1 = head1,*p2 = head2,*shortp=NULL,*longp=NULL;
 	//计算链表1和2的长度
 	while(p1 != NULL){
 		p1 = p1->next;
@@ -145,15 +151,121 @@ ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
 	else
 		return NULL;
 }
-
-
-ListNode * head2 = NULL,*head3 = NULL;
+/*
+	函数功能：判断链表是否有环
+	参数说明：
+	@head：链表的头指针
+	@node：返回的环链表相遇节点
+	返回值：
+	true表示链表中有环
+	false表示链表中无环
+*/
+bool isCircleList(struct ListNode *head,struct ListNode **node)
+{
+	assert(head != NULL);
+	struct ListNode * low = head, *fast = head;
+	do{
+		low = low->next;//low每次走1步
+		fast = fast->next;//fast每次走2步
+		if(fast != NULL)
+			fast = fast->next;
+	}while(low!=NULL && fast!=NULL && low != fast);
+	if(low!=NULL && fast!=NULL && low == fast){
+		*node = low;//返回相遇点指针
+		return true;
+	}else{
+		*node = NULL;	
+		return false;
+	}
+}
+/*
+	函数功能：如果一个链表中存在环，检测环的入口点
+	参数说明：
+	@head：链表的头指针
+	返回值：
+	有环链表的入口点，或者NULL(当链表中不存在环时)
+*/
+struct ListNode *getCircleEntry( struct ListNode* head)
+{
+	struct ListNode * low = head, *fast = head,*meet=NULL;
+	assert(head != NULL);
+	do{
+		low = low->next;
+		fast = fast->next;
+		if(fast != NULL)
+			fast = fast->next;
+	}while(low!=NULL && fast!=NULL && low != fast);
+	if(low!=NULL && fast!=NULL && low == fast)//相遇点
+		meet = fast;
+	else//无环，退出
+		return NULL;
+	//low指针指向头，meet指向相遇点，单步走，相遇的第一个节点就是环的入口点
+	low = head;
+	while(low != meet){
+		low = low->next ;
+		meet = meet->next ;
+	}
+	return low;
+}
+/*
+	函数功能：检测两个链表是否相交(任意单链表，可以存在环)
+	参数说明：
+	@head1：链表1
+	@head2：链表2
+*/
+bool isCrossed(ListNode*head1,ListNode*head2)
+{
+	bool f1=false,f2=false,flag = false;
+	struct ListNode * first = NULL,*second = NULL,*tmp = NULL;
+	int i = 0, len = 0;//len表示环链表的长度
+	assert(head1 != NULL && head2 != NULL);
+	if(head1 ==  head2)//判断同一个链表的情况
+		return true;
+	//1.判断链表是否有环
+	f1 = isCircleList(head1,&first);
+	f2 = isCircleList(head2,&second);
+	//2.若均有环，则找到相遇点，然后在head2中查找是否存在此节点，若不存在则返回
+	if(f1 && f2){
+		//检测first指针是否属于链表2中
+		//获得环的入口点
+		tmp = getCircleEntry(head2);
+		second = tmp;
+		//从环的入口点开始判断相遇点是否属于head2链表中
+		//tmp != second表示未到相遇节点,tmp != first表示未找到相遇点
+		while((flag == false || tmp != second) && tmp != first){
+			flag = true;//设置标志位
+			tmp = tmp ->next;
+		}//while
+		if(tmp == first)
+			return true;
+		else
+			return false;
+	}else if(f1==false && f2==false){//3.若无环，查找到最后一个节点是否指向相同的节点
+		first = head1;
+		second = head2;
+		//找两个链表的尾指针
+		while(first->next != NULL)
+			first = first->next;
+		while(second->next != NULL)
+			second = second->next;
+		//判断尾指针是否相同，相同则返回true
+		if(first == second)
+			return true;
+		else
+			return false;
+	}else
+		return false;//其他情况（一个有环，一个无环）返回false
+}
+struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL;
 int main()
 {
 	int i = 0,k=0;
+	bool flag = false;
 	ElementType a[]={1,2,3,4,5,6};
 	ElementType b[]={-1,-2,9,8,0,12};
-	ElementType c[]={0,1,2,34};
+	ElementType c[]={0,1,2,34,8,4,2,14,10};
+	ElementType d[]={-1,5,2,3,1};
+
 	struct ListNode * p = NULL,*tmp = NULL;
 	int len = sizeof(a)/sizeof(a[0]);
 	buildList(&head,a,len);
@@ -176,7 +288,7 @@ int main()
 	tmp = head2;
 	while(tmp->next !=NULL)
 		tmp = tmp->next;
-	ListInsertList(tmp,p);//构造相交的单链表
+	ListInsertList(tmp,p);//构造相交的单链表head1和head2
 
 	PrintList(head2);
 
@@ -187,12 +299,66 @@ int main()
 	len = sizeof(c)/sizeof(c[0]);
 	buildList(&head3,c,len);
 	PrintList(head3);
-	tmp = getFirstNode(head,head3);
+	tmp = getFirstNode(head,head3);//head和head3不相交
 	if(tmp != NULL){
 		printf("first node is %d\n",tmp->value);
 	}else{
 		printf("not getFirstNode\n");
 	}
+
+
+	p = head3;
+	tmp = head3;
+	for(i=0;i<4;++i)
+		tmp = tmp->next;
+	while(p->next != NULL)//找到尾指针
+		p = p->next;
+	p->next = tmp;//构造环1
+
+	p = getCircleEntry(head3);//获得环的入口点
+	if(p!=NULL)
+		printf("head3 circle Entry is %d\n",p->value);
+	else
+		printf("head3 not circle\n");
+	
+	p = getCircleEntry(head);//获得环的入口点
+	if(p!=NULL)
+		printf("head circle Entry is %d\n",p->value);
+	else
+		printf("head not circle");
+
+	if(isCircleList(head2,&tmp))
+		printf("head2 has circle\n");
+	else
+		printf("head2 not circle\n");
+	if(isCircleList(head3,&tmp))
+		printf("head3 has circle\n");
+	else
+		printf("head3 not circle\n");	
+
+	len = sizeof(d)/sizeof(d[0]);
+	buildList(&head4,d,len);//构建单链表
+	p = head4;
+	while(p->next!=NULL)//找到尾指针
+		p = p->next;
+	tmp = head3;
+	for(i=0;i<6;++i)
+		tmp = tmp->next;//入口点+1
+	p->next = tmp;
+	
+	//PrintList(head4);
+	flag = isCrossed(head3,head4);
+	if(flag == true)
+		printf("crossed.\n");
+	else
+		printf("not crossed.\n");
+	
+	flag = isCrossed(head4,head4);
+	if(flag == true)
+		printf("crossed.\n");
+	else
+		printf("not crossed.\n");
+
 	fflush(stdin);
 	getchar();
 }
