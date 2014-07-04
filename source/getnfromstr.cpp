@@ -45,6 +45,11 @@ int main()
 	qsort(helper,n,sizeof(unsigned int),fcmp);
 	for(i=0;i<n;++i)
 		printf("%d\n",helper[i]);
+	//释放动态申请的内存
+	for(i=0;i<n;++i){
+		free(p[i]);
+	}
+	free(p);
 	fflush(stdin);
 	getchar();
 	return 0;
