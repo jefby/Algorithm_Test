@@ -66,6 +66,7 @@ int main()
 	a = (int*)calloc(n,sizeof(int));
 	queen(0);
 	printf("\n共有%d种放法\n",sum);
+	free(a);//释放内存
 	fflush(stdin);
 	getchar();
 	return 0;
