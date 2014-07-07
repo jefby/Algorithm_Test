@@ -48,7 +48,7 @@ int main()
 	int i;
 	int a[]={3,1,2,4,5,9,0};
 	int length = sizeof(a)/sizeof(a[0]);
-	insert_sort(a,length,fcmp2);
+	insert_sort(a,length,fcmp1);
 	for(i=0;i<length;++i)
 		printf("%d ",a[i]);
 	getchar();

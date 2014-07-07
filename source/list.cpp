@@ -60,6 +60,26 @@ void ListInsertList(struct ListNode *p,struct ListNode *insert)
 	}
 }
 /*
+	函数功能：单链表的就地逆置
+	参数说明：
+	@head：单链表的头指针
+*/
+void ListRevert(struct ListNode **head)
+{
+	struct ListNode * p = *head,*last = NULL,*tmp = NULL;
+
+	while(p->next != NULL){
+		tmp = p;
+		tmp = tmp->next;//记录下下一个指针
+		p ->next = last;//将当前节点指向last指针
+		last = p;//更新last指针
+		p = tmp;//更新p指针
+	}
+	p->next = last;//处理尾指针
+	last = p;//更新
+	*head = last;//将新的头指针赋值给*head指针
+}
+/*
 	函数功能：打印单链表
 */
 void PrintList(struct ListNode *head)
@@ -256,7 +276,7 @@ bool isCrossed(ListNode*head1,ListNode*head2)
 	}else
 		return false;//其他情况（一个有环，一个无环）返回false
 }
-struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL;
+struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL,*head5 = NULL;
 int main()
 {
 	int i = 0,k=0;
@@ -265,6 +285,7 @@ int main()
 	ElementType b[]={-1,-2,9,8,0,12};
 	ElementType c[]={0,1,2,34,8,4,2,14,10};
 	ElementType d[]={-1,5,2,3,1};
+	ElementType e[]={0,1,2,3,4,5};
 
 	struct ListNode * p = NULL,*tmp = NULL;
 	int len = sizeof(a)/sizeof(a[0]);
@@ -359,6 +380,12 @@ int main()
 	else
 		printf("not crossed.\n");
 
+
+	len = sizeof(e)/sizeof(e[0]);
+	buildList(&head5,e,len);
+	PrintList(head5);
+	ListRevert(&head5);
+	PrintList(head5);
 	fflush(stdin);
 	getchar();
 }
