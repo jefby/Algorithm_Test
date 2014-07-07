@@ -38,17 +38,21 @@ int singleNumberII(int A[],int n)
 		}
 	}
 	for(i=0;i<32;++i)//还原single number
-		if(helper[i]%3 != 0)
+		if(helper[i]%3 != 0)//如果是出现奇数次，则修改helper[i]%3为helper[i]%k即可
 			res |= (1<<i);
 	return res;
 }
 
 int main()
 {
-	int A[]={2,2,2,3,5,3,3,6,6,6,5,5,8};
-	int n = sizeof(A)/sizeof(A[0]);
+	int A1[]={2,2,2,3,5,3,3,6,6,6,5,5,8};
+	int A2[]={2,2,3,3,3,3,2,2,4};
+	int n = sizeof(A1)/sizeof(A1[0]);
 	int res = 0;
-	res = singleNumberII(A,n);
+	res = singleNumberII(A1,n);
+	cout<<res<<endl;
+	n = sizeof(A2)/sizeof(A2[0]);
+	res = singleNumber(A2,n);
 	cout<<res<<endl;
 	fflush(stdin);
 	getchar();
