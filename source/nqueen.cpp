@@ -45,6 +45,7 @@ int can_place(int row,int k)
 	}
 	return 1;
 }
+#if 0
 void queen(int row)
 {
 	int k = 0;
@@ -59,12 +60,38 @@ void queen(int row)
 		}//for
 	}
 }
+#endif
+/*
+	n皇后问题的非递归解法
+*/
+void queen_nonrec(int n)
+{	
+	int i  = 0;
+	a[0] = -1;
+
+	while( i>= 0 ){
+		a[i] += 1;
+		while(a[i] < n &&  !(can_place(i,a[i])))
+			a[i] += 1;
+		if(a[i] < n){
+			if(i == n-1)
+				++sum;
+			else{
+				++i;
+				a[i] = -1;
+			}
+		}else
+			--i;
+	}
+			
+}
 int main()
 {
 	printf("N皇后，请输入N(N<=13)：");
 	scanf("%d",&n);//输入N皇后的值N
 	a = (int*)calloc(n,sizeof(int));
-	queen(0);
+	//queen(0);
+	queen_nonrec(n);
 	printf("\n共有%d种放法\n",sum);
 	free(a);//释放内存
 	fflush(stdin);

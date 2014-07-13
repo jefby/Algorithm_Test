@@ -11,7 +11,7 @@
 typedef int ElementType;
 
 struct ListNode{
-	ElementType value;//节点值
+	ElementType val;//节点值
 	struct ListNode *next;//单链表，next指针
 };
 
@@ -34,7 +34,7 @@ void ListInit(struct ListNode **head)
 ListNode* ListInsert(struct ListNode *p,ElementType val)
 {
 	struct ListNode * tmp = (ListNode*)malloc(sizeof(struct ListNode));
-	tmp->value = val;
+	tmp->val = val;
 	tmp->next = p;
 	p = tmp;
 	return p;
@@ -86,7 +86,7 @@ void PrintList(struct ListNode *head)
 {
 	struct ListNode * p = head;
 	while(p!=NULL){
-		printf("%d ",p->value);
+		printf("%d ",p->val);
 		p = p->next ;
 	}
 	printf("\n");
@@ -276,7 +276,111 @@ bool isCrossed(ListNode*head1,ListNode*head2)
 	}else
 		return false;//其他情况（一个有环，一个无环）返回false
 }
-struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL,*head5 = NULL;
+
+/*
+	Lettcode题目：
+	删除顺序链表中的重复元素
+
+*/
+ListNode *deleteDuplicates(ListNode *head) 
+{
+	ListNode * low = head,*fast = NULL;
+	if(head == NULL)
+		return NULL;
+	fast = head->next;
+	while(fast != NULL){
+		while(fast != NULL && low->val == fast->val){//连续删除重复元素
+			low->next = fast->next;
+			fast = fast->next;
+		}
+		if(low != NULL){
+			low = low->next;
+			if(fast != NULL)
+				fast = fast->next;
+		}
+	}
+	return head;
+}
+/*
+	题目描述：
+	合并两个有序链表
+*/
+ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) 
+{
+       ListNode *p1 = l1,*p2 = l2;
+		ListNode *res = NULL,*tmp=NULL;
+		if(p1==NULL&&p2 != NULL)
+			return p2;
+		if(p1!=NULL&&p2==NULL)
+			return p1;
+		if(p1==NULL&&p2==NULL)
+			return NULL;
+		if(p1->val <= p2->val){
+			res = p1;
+			p1=p1->next;
+		}else{
+			res = p2;
+			p2=p2->next;
+		}
+		tmp = res;
+
+		while(p1 != NULL && p2 != NULL){
+			if(p1->val <= p2->val){
+				tmp->next = p1;
+				p1 = p1->next;
+				tmp->next->next = NULL;
+			}else{
+				tmp->next = p2;
+				p2 = p2->next;
+			    tmp->next->next = NULL;
+			}
+			tmp = tmp->next;
+		}
+		if(p1 != NULL)
+			tmp->next = p1;
+		if(p2 != NULL)
+			tmp->next = p2;
+		return res;  
+}
+
+/*
+	Swap Nodes in Pairs 
+	Given a linked list, swap every two adjacent nodes and return its head.
+
+	For example,
+	Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+	Your algorithm should use only constant space. You may not modify the values in the list, only nodes itself can be changed.
+*/
+
+ListNode *swapPairs(ListNode *head) 
+{
+	   ListNode *p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL;//p4指针用于保存两个节点的后一个，以便连接多个pair对
+    	if(head == NULL || head->next == NULL)
+    		return head;
+    	p1 = head;
+    	p2 = head->next ;
+    	p3 = p2;//保存结果链表的起始地址
+		ListNode *tmp = 0;
+		
+    	while(p1 != NULL && p2 != NULL){
+			p1->next = p2->next;
+    		p2->next = p1;
+			tmp = p1;
+			p1 =  p2;
+			p2 = tmp;//交换两个指针
+			if(p4)
+				p4->next = p1;//连接两个pair对
+			p4 = p2;//记录新的pair对位置
+			if(p2->next){
+				p2 = p2->next->next;//更新节点
+				p1 = p1->next->next;
+			}else
+				p2 = p2->next;
+    	}
+        return p3; 
+}
+struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL,*head5 = NULL,*head6 = NULL,*head7=NULL,*head8=NULL,*head9=NULL;
 int main()
 {
 	int i = 0,k=0;
@@ -286,6 +390,10 @@ int main()
 	ElementType c[]={0,1,2,34,8,4,2,14,10};
 	ElementType d[]={-1,5,2,3,1};
 	ElementType e[]={0,1,2,3,4,5};
+	ElementType f[]={1,1,2,2,3,4};
+
+	ElementType g[]={5};
+	ElementType h[]={4,2,1,6};
 
 	struct ListNode * p = NULL,*tmp = NULL;
 	int len = sizeof(a)/sizeof(a[0]);
@@ -297,9 +405,9 @@ int main()
 	p = SearchKelem(head,k);
 	
 	if(p != NULL)
-		printf("%d\n",p->value);
+		printf("%d\n",p->val);
 	else
-		printf("k value error\n");
+		printf("k val error\n");
 
 	len = sizeof(b)/sizeof(b[0]);
 	buildList(&head2,b,len);
@@ -315,14 +423,14 @@ int main()
 
 	tmp = getFirstNode(head,head2);
 	if(tmp != NULL){
-		printf("first node is %d\n",tmp->value);
+		printf("first node is %d\n",tmp->val);
 	}
 	len = sizeof(c)/sizeof(c[0]);
 	buildList(&head3,c,len);
 	PrintList(head3);
 	tmp = getFirstNode(head,head3);//head和head3不相交
 	if(tmp != NULL){
-		printf("first node is %d\n",tmp->value);
+		printf("first node is %d\n",tmp->val);
 	}else{
 		printf("not getFirstNode\n");
 	}
@@ -338,13 +446,13 @@ int main()
 
 	p = getCircleEntry(head3);//获得环的入口点
 	if(p!=NULL)
-		printf("head3 circle Entry is %d\n",p->value);
+		printf("head3 circle Entry is %d\n",p->val);
 	else
 		printf("head3 not circle\n");
 	
 	p = getCircleEntry(head);//获得环的入口点
 	if(p!=NULL)
-		printf("head circle Entry is %d\n",p->value);
+		printf("head circle Entry is %d\n",p->val);
 	else
 		printf("head not circle");
 
@@ -386,6 +494,29 @@ int main()
 	PrintList(head5);
 	ListRevert(&head5);
 	PrintList(head5);
+
+	len = sizeof(f)/sizeof(f[0]);
+	buildList(&head6,f,len);
+	deleteDuplicates(head6);
+	PrintList(head6);
+#if 0
+	len = sizeof(g)/sizeof(g[0]);
+	buildList(&head7,g,len);
+
+	PrintList(head7);
+
+	len = sizeof(h)/sizeof(h[0]);
+	buildList(&head8,h,len);
+
+	PrintList(head8);
+	head9=mergeTwoLists(head7,head8);
+	PrintList(head8);
+#endif
+	len = sizeof(h)/sizeof(h[0]);
+	buildList(&head8,h,len);
+	PrintList(head8);
+	head7 = swapPairs(head8);
+	PrintList(head7);
 	fflush(stdin);
 	getchar();
 }
