@@ -1,6 +1,8 @@
 /*
 	测试数据:
 	124#6###3##
+	或者
+	123#4#####
 	后序遍历输出：
 	6->4->2->3->1->
 	中序遍历输出：
@@ -12,6 +14,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>//队列，用于辅助层次遍历
 
 using namespace std;
 struct TreeNode{
@@ -228,10 +231,50 @@ bool isBalanced(TreeNode *root)
         return false;//否则返回false
 }
 
+/*
+	按层遍历：
+	非递归处理，配合队列来完成
+*/
+vector<vector<int> > LevelOrderTraverse_rec(TreeNode * root)
+{
+	vector<vector<int> >res;
+	vector<int> ivec;
+	queue<TreeNode *>ique;
+	
+	int count = 1,i=0;
+	int cnt = 0;
+	//root==NULL的情况
+	if(!root)
+		return res;
+	ique.push(root);
+	ique.push(NULL);//用NULL来分割层，妙！
+	while(!ique.empty()){//循环取队列头
+		root = ique.front();
+		ique.pop();
+		if(root){
+			ivec.push_back(root->val);
+			if(root->left)
+				ique.push(root->left);
+			if(root->right)
+				ique.push(root->right);
+		}else{
+			if(!ivec.empty()){
+				ique.push(NULL);
+				res.push_back(ivec);
+				ivec.clear();
+			}
+		}
+	}
+	//逆序
+	reverse(res.begin(),res.end());
+
+	return res;
+}
 TreeNode * root = NULL;
 int main()
 {
 	vector<int>ivec;
+	int i=0,j=0;
 
 	CreateTree(&root);
 	cout<<"后序遍历"<<endl;
@@ -256,7 +299,13 @@ int main()
 	cout<<endl<<"非递归的后序遍历"<<endl;
 	for(;it != ivec.end();++it)
 		cout<<(char)*it<<"->";
-	cout<<endl<<isBalanced(root)<<endl;;
+	cout<<endl<<isBalanced(root)<<endl;
+	vector<vector<int> >res=LevelOrderTraverse_rec(root);
+	for(i=0;i<res.size();++i){
+		for(j=0;j<res[i].size();++j)
+			printf("%c ",res[i][j]);
+		cout<<endl;
+	}
 	#if 0
 	int a[]={1,2,3,4,5,6};
 	int len = sizeof(a)/sizeof(a[0]);
