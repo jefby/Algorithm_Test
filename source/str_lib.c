@@ -53,6 +53,66 @@ int mystrstr(const char *str,const char *substr)
 }
 
 /*
+	Boyer-Moore算法
+	KMP的匹配是从模式串的开头开始匹配的，而1977年，德克萨斯大学的Robert S. Boyer教授和J Strother Moore教授发明了一种新的字符串匹配算法：Boyer-Moore算法，简称BM算法。
+	该算法从模式串的尾部开始匹配，且拥有在最坏情况下O(N)的时间复杂度。在实践中，比KMP算法的实际效能高。
+
+    BM算法定义了两个规则：
+
+	坏字符规则：当文本串中的某个字符跟模式串的某个字符不匹配时，我们称文本串中的这个失配字符为坏字符，此时模式串需要向右移动，移动的位数 = 坏字符在模式串中的位置 - 坏字符在模式串中最右出现的位置。
+				此外，如果"坏字符"不包含在模式串之中，则最右出现位置为-1。
+	好后缀规则：当字符失配时，后移位数 = 好后缀在模式串中的位置 - 好后缀在模式串上一次出现的位置，且如果好后缀在模式串中没有再次出现，则为-1。
+
+	@param
+	@str : 主字符串
+	@substr ： 匹配串
+
+int badpos(const char *str,char ch){
+	char *p = str;
+	if(!p)
+		return -2;
+	while(*(p+1)) 
+		++p;
+	while(p != str && *p != ch)
+		--p;
+	if(p == str && *p != ch)
+		return -1;
+	return p-str;
+}
+int boyer-moore(const char *str,const char *substr)
+{
+	char *psub = substr;
+	char *pstr = str;
+	int pos = 0;
+	if(!substr || !str || strlen(str) < strlen(substr))//检查指针有效性
+		return -1;
+	
+	while(*(psub+1))
+		++psub;
+	pstr += (psub-substr);
+	
+	while(*pstr  && *psub ){
+		if(*psub != *pstr){//坏字符
+			pos = badpos(substr,*pstr);//寻找最右位置
+			pstr += (psub-substr)-pos; //右移这些位
+		}else{//匹配
+			while(psub != substr && *pstr == *psub){
+				--pstr;
+				--psub;
+			}
+			if(psub == substr && *psub == *pstr)//完全匹配
+				return pstr - str;//返回位置
+			else{//好后缀原则
+				//未写完，暂时放弃
+			}
+
+		}
+	}//while
+
+
+}
+*/
+/*
 	函数功能：字符串拷贝
 	参数说明：
 	@src：源字符串
