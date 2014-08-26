@@ -106,7 +106,7 @@ evaluation(int op1,int op2,char opcode)
 			res = op1 / op2;
 		break;
 		default:
-			perror("%c is not insistanted\n",opcode);
+			printf("%c is not insistanted\n",opcode);
 		return -1;
 	}
 	return res;
@@ -182,7 +182,6 @@ convert_mid_to_post(myops *ptr,int len,int *return_len)
 		free(res);
 		perror("convert_mid_to_post \'(\'&&\')\' is not compared\n");
 		return NULL;
-
 }
 /*
 	计算后缀表达式
@@ -226,19 +225,78 @@ compute_op_post(myops *ptr,int len)
 		perror("compute_op_post stack is empty.\n");
 		return;
 }
+
+
+static int
+isopcode(char ch)
+{
+	return ch=='('||ch==')'||ch=='+'||ch=='-'||ch=='*'||ch=='/';
+}
+
+/*
+	将普通的字符串转换为中缀表达式指针
+
+*/
+	
+static 
+myops *convert_string_to_myops(const char *str,int *len)
+{
+	myops * ptr = NULL;
+	int cnt = 0;
+	int temp = 0;
+	int i = 0;
+	if(!len)
+		return NULL;
+	if(!str)
+		return NULL;
+	while(*str){
+		if(isopcode(*str)){
+			++cnt;
+			ptr = (myops*)realloc(ptr,cnt*sizeof(myops));
+			ptr[cnt-1].flag = 1;
+			ptr[cnt-1].op.op=*str;
+			++str;
+		}else if(isdigit(*str)){
+			temp = 0;
+			while(isdigit(*str)){
+				temp =temp*10+(*str)-'0';
+				++str;
+			}
+			++cnt;
+			ptr = (myops*)realloc(ptr,cnt*sizeof(myops));
+			ptr[cnt-1].flag = 0;
+			ptr[cnt-1].op.val=temp;
+		}else{
+			return NULL;
+		}
+	}
+	*len = cnt;
+	return ptr;
+}
 int 
 main()
 {
 	//myops a[]={{'(',1},{10,0},{'+',1},{10,0},{')',1},{'*',1},{10,0}};
-	myops a[]={{'(',1},{10,0},{'+',1},{10,0},{'*',1},{10,0}};
+	//myops a[]={{'(',1},{10,0},{'+',1},{10,0},{'*',1},{10,0}};
+	myops * a = NULL;
 	myops * b = NULL;
 	int rev = 0;
-	int len = sizeof(a)/sizeof(a[0]);
+	//int len = sizeof(a)/sizeof(a[0]);
+	int len = 0;
+	int i = 0;
+	char *p="(10+10)*10";
+	a = convert_string_to_myops(p,&len);
+	printf("mid string is :");
+	for(i=0;i<len;++i){
+		if(a[i].flag == 1)
+			printf("%c",a[i].op.op);
+		else
+			printf("%d",a[i].op.val);
+	}
+	printf("\n");
 
 	b = convert_mid_to_post(a,len,&rev);
 	compute_op_post(b,rev);
 	getchar();
 	return 0;
 }
-
-
