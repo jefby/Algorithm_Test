@@ -24,14 +24,18 @@
 //坏字符原则
 #define ASIZE 256
 #define XSIZE 256
-
+/*
+   处理坏字符规则
+*/
 void preBmBc(char *x, int m, int bmBc[]) {
    int i;
- 
+   //初始化bmBc数组的每个元素为m
    for (i = 0; i < ASIZE; ++i)
       bmBc[i] = m;
-   for (i = 0; i < m - 1; ++i)
+   for (i = 0; i < m - 1; ++i){
       bmBc[x[i]] = m - i - 1;
+      printf("%c,%d;",x[i],bmBc[x[i]]);
+   }
 }
  
  
@@ -70,7 +74,13 @@ void preBmGs(char *x, int m, int bmGs[]) {
    for (i = 0; i <= m - 2; ++i)
       bmGs[m - 1 - suff[i]] = m - 1 - i;
 }
- 
+/*
+   Boyer-Moore implement
+   @x : 匹配串字符指针
+   @y : 母串字符指针
+   @m : 匹配串长度
+   @n : 母串长度
+*/
  
 void BM(char *x, int m, char *y, int n) {
    int i, j, bmGs[XSIZE], bmBc[ASIZE];
@@ -82,24 +92,25 @@ void BM(char *x, int m, char *y, int n) {
    /* Searching */
    j = 0;
    while (j <= n - m) {
-      for (i = m - 1; i >= 0 && x[i] == y[i + j]; --i);
+      for (i = m - 1; i >= 0 && x[i] == y[i + j]; --i)
+         ;
       if (i < 0) {
          printf("match index = %d\n",j);
          j += bmGs[0];
-      }
-      else
+      }else
          j += MAX(bmGs[i], bmBc[y[i + j]] - m + 1 + i);
    }
 }
 
 int main()
 {
-   /*
+   
    char *tx = "GCATCGCAGAGAGTATACAGTACG";
    char *pat= "GCAGAGAG";
-   */
+   /*
    char *tx =  "AABAACAADAABAAABAA";
    char *pat =  "AABA";
+   */
    int m = strlen(pat);
    int n = strlen(tx);
    BM(pat,m,tx,n);

@@ -1,20 +1,20 @@
 /*
-	²âÊÔÊı¾İ:
+	æµ‹è¯•æ•°æ®:
 	124#6###3##
-	»òÕß
+	æˆ–è€…
 	123#4#####
-	ºóĞò±éÀúÊä³ö£º
+	ååºéå†è¾“å‡ºï¼š
 	6->4->2->3->1->
-	ÖĞĞò±éÀúÊä³ö£º
+	ä¸­åºéå†è¾“å‡ºï¼š
 	4->6->2->1->3->
-	ÏÈĞò±éÀúÊä³ö£º
+	å…ˆåºéå†è¾“å‡ºï¼š
 	1->2->4->6->3->
 
 */
 #include <iostream>
 #include <vector>
 #include <stack>
-#include <queue>//¶ÓÁĞ£¬ÓÃÓÚ¸¨Öú²ã´Î±éÀú
+#include <queue>//é˜Ÿåˆ—ï¼Œç”¨äºè¾…åŠ©å±‚æ¬¡éå†
 
 using namespace std;
 struct TreeNode{
@@ -25,7 +25,7 @@ struct TreeNode{
 };
 
 /*
-	º¯Êı¹¦ÄÜ£º´´½¨¸ù½Úµã£¬µİ¹é´´½¨
+	å‡½æ•°åŠŸèƒ½ï¼šåˆ›å»ºæ ¹èŠ‚ç‚¹ï¼Œé€’å½’åˆ›å»º
 */
 void CreateTree(TreeNode ** root)
 {
@@ -42,9 +42,9 @@ void CreateTree(TreeNode ** root)
 	}
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÊ÷µÄºóĞò±éÀú£¨·Çµİ¹éÊµÏÖ£©
-	²ÎÊıËµÃ÷£º
-	@root£ºÊ÷µÄ¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šæ ‘çš„ååºéå†ï¼ˆéé€’å½’å®ç°ï¼‰
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ‘çš„æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 */
 
 vector<int> PostOrderTraverse(TreeNode * root)
@@ -52,35 +52,35 @@ vector<int> PostOrderTraverse(TreeNode * root)
 	vector<int> ivec;
 	struct tagTreeNode{
 		TreeNode *root;
-		bool tag;//ÓÃÓÚ±ê¼ÇÓÒ½ÚµãÊÇ·ñÒÑ¾­±»·ÃÎÊ¹ı
+		bool tag;//ç”¨äºæ ‡è®°å³èŠ‚ç‚¹æ˜¯å¦å·²ç»è¢«è®¿é—®è¿‡
 		tagTreeNode(TreeNode*r,bool tag):root(r),tag(tag){};
 	};
 	
 	stack<tagTreeNode>istack;
 	struct tagTreeNode tmp(NULL,false);
-	if(!root)//´¦ÀíÊ÷Îª¿ÕµÄÇé¿ö
+	if(!root)//å¤„ç†æ ‘ä¸ºç©ºçš„æƒ…å†µ
 		return ivec;
-	while(root){//Ò»Â·Ïò×ó×ß£¬Ò»Ö±µ½ÎªNULL
-		istack.push(tagTreeNode(root,false));//¹¹ÔìÊı¾İ½á¹¹tagTreeNode(Ö¸Õë+tag)£¬tag³õÊ¼»¯Îªfalse
+	while(root){//ä¸€è·¯å‘å·¦èµ°ï¼Œä¸€ç›´åˆ°ä¸ºNULL
+		istack.push(tagTreeNode(root,false));//æ„é€ æ•°æ®ç»“æ„tagTreeNode(æŒ‡é’ˆ+tag)ï¼Œtagåˆå§‹åŒ–ä¸ºfalse
 		root=root->left;
 	}
-	while(!istack.empty()){//Èç¹ûÕ»·Ç¿Õ
-		tmp = istack.top();//È¡Ê÷¸ù½Úµã
-		while( tmp.tag == true || tmp.root->right == NULL){//µ±¸Ã½ÚµãµÄ×óÓÒ×ÓÊ÷¶¼·ÃÎÊÍêºó£¬µ¯Õ»£¨ÓÒ×ÓÊ÷Îª¿Õ»òÕßÒÑ¾­·ÃÎÊ¹ı£¬´ËÊ±×ó×ÓÊ÷ÒÑ¾­ÎªNULL£©
-			ivec.push_back(tmp.root->val);//´æÈëvectorÖĞ
-			istack.pop();//³öÕ»
-			if(istack.empty())//Õ»Îª¿ÕÍË³ö
+	while(!istack.empty()){//å¦‚æœæ ˆéç©º
+		tmp = istack.top();//å–æ ‘æ ¹èŠ‚ç‚¹
+		while( tmp.tag == true || tmp.root->right == NULL){//å½“è¯¥èŠ‚ç‚¹çš„å·¦å³å­æ ‘éƒ½è®¿é—®å®Œåï¼Œå¼¹æ ˆï¼ˆå³å­æ ‘ä¸ºç©ºæˆ–è€…å·²ç»è®¿é—®è¿‡ï¼Œæ­¤æ—¶å·¦å­æ ‘å·²ç»ä¸ºNULLï¼‰
+			ivec.push_back(tmp.root->val);//å­˜å…¥vectorä¸­
+			istack.pop();//å‡ºæ ˆ
+			if(istack.empty())//æ ˆä¸ºç©ºé€€å‡º
 				break;
-			tmp = istack.top();//È¡ĞÂµÄ½Úµã
+			tmp = istack.top();//å–æ–°çš„èŠ‚ç‚¹
 		}//while(tmp.tag == true || tmp.root->right == NULL)
 
 		if(!istack.empty()){
 			root=tmp.root;
-			tmp.tag = true;//±ê¼Ç·ÃÎÊÁË¸Ã½ÚµãµÄÓÒ×ÓÊ÷
+			tmp.tag = true;//æ ‡è®°è®¿é—®äº†è¯¥èŠ‚ç‚¹çš„å³å­æ ‘
 			istack.pop();
-			istack.push(tmp);//ĞŞ¸Äºó·Å»ØÕ»ÖĞ
-			root = root->right;//·ÃÎÊÓÒ×ÓÊ÷
-			while(root){//Ò»Ö±Ïò×ó×ß
+			istack.push(tmp);//ä¿®æ”¹åæ”¾å›æ ˆä¸­
+			root = root->right;//è®¿é—®å³å­æ ‘
+			while(root){//ä¸€ç›´å‘å·¦èµ°
 				istack.push(tagTreeNode(root,false));
 				root = root->left;
 			}//while(root)
@@ -90,22 +90,22 @@ vector<int> PostOrderTraverse(TreeNode * root)
 	return ivec;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÊ÷µÄÇ°Ğò±éÀú£¨·Çµİ¹éÊµÏÖ£©
-	²ÎÊıËµÃ÷£º
-	@root£ºÊ÷µÄ¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šæ ‘çš„å‰åºéå†ï¼ˆéé€’å½’å®ç°ï¼‰
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ‘çš„æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 */
 vector<int> PreOrderTraverse(TreeNode * root)
 {
 		vector<int> ivec;
 		stack<TreeNode*>istack;
-		if(!root)//´¦ÀíÊ÷Îª¿ÕµÄÇé¿ö
+		if(!root)//å¤„ç†æ ‘ä¸ºç©ºçš„æƒ…å†µ
 			return ivec;
 		while(root || !istack.empty()){
 			while(root){
 				istack.push(root);
 				ivec.push_back(root->val);
 				root=root->left;
-			}//Ò»Ö±Ïò×ó×ßµ½Í·
+			}//ä¸€ç›´å‘å·¦èµ°åˆ°å¤´
 			root=istack.top();
 			istack.pop();
 			root = root->right;
@@ -113,21 +113,21 @@ vector<int> PreOrderTraverse(TreeNode * root)
 		return ivec;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÊ÷µÄÖĞĞò±éÀú£¨·Çµİ¹éÊµÏÖ£©
-	²ÎÊıËµÃ÷£º
-	@root£ºÊ÷µÄ¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šæ ‘çš„ä¸­åºéå†ï¼ˆéé€’å½’å®ç°ï¼‰
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ‘çš„æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 */
 vector<int> InOrderTraverse(TreeNode * root)
 {
 	vector<int> ivec;
 	stack<TreeNode*>istack;
-	if(!root)//´¦ÀíÊ÷Îª¿ÕµÄÇé¿ö
+	if(!root)//å¤„ç†æ ‘ä¸ºç©ºçš„æƒ…å†µ
 		return ivec;
 	while(root || !istack.empty()){
 		while(root){
 			istack.push(root);
 			root=root->left;
-		}//Ò»Ö±Ïò×ó×ßµ½Í·
+		}//ä¸€ç›´å‘å·¦èµ°åˆ°å¤´
 		root=istack.top();
 		ivec.push_back(root->val);
 		istack.pop();
@@ -136,9 +136,9 @@ vector<int> InOrderTraverse(TreeNode * root)
 	return ivec;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºµİ¹éµÄºóĞò±éÀú
-	²ÎÊıËµÃ÷£º
-	@root£º¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šé€’å½’çš„ååºéå†
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 */
 void PostOrderTraverse_rec(TreeNode * root)
 {
@@ -151,9 +151,9 @@ void PostOrderTraverse_rec(TreeNode * root)
 	}
 }
 /*
-	º¯Êı¹¦ÄÜ£ºµİ¹éµÄÇ°Ğò±éÀú
-	²ÎÊıËµÃ÷£º
-	@root£ºÊ÷¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šé€’å½’çš„å‰åºéå†
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ‘æ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 
 */
 void PreOrderTraverse_rec(TreeNode * root)
@@ -167,9 +167,9 @@ void PreOrderTraverse_rec(TreeNode * root)
 	}
 }
 /*
-	º¯Êı¹¦ÄÜ£ºµİ¹éµÄÖĞĞò±éÀú
-	²ÎÊıËµÃ÷£º
-	@root£º¸ù½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šé€’å½’çš„ä¸­åºéå†
+	å‚æ•°è¯´æ˜ï¼š
+	@rootï¼šæ ¹èŠ‚ç‚¹æŒ‡é’ˆ
 */
 void InOrderTraverse_rec(TreeNode * root)
 {
@@ -183,7 +183,7 @@ void InOrderTraverse_rec(TreeNode * root)
 }
 /*
 	Given an array where elements are sorted in ascending order, convert it to a height balanced BST.
-	¹Ø¼üµãÔÚÓÚ£º¸ß¶ÈÆ½ºâµÄ¶ş²æ²éÕÒÊ÷
+	å…³é”®ç‚¹åœ¨äºï¼šé«˜åº¦å¹³è¡¡çš„äºŒå‰æŸ¥æ‰¾æ ‘
 
 */
 TreeNode *sortedArrayToBST(vector<int>&num,int start,int end)
@@ -201,10 +201,10 @@ TreeNode *sortedArrayToBST(vector<int> &num)
 	return sortedArrayToBST(num,0,num.size()-1);
 }
 /*
-	Çó½âÊ÷µÄ¸ß¶È.
-	¶¨Òåroot=NULLµÄ¸ß¶ÈÎª0¡£
+	æ±‚è§£æ ‘çš„é«˜åº¦.
+	å®šä¹‰root=NULLçš„é«˜åº¦ä¸º0ã€‚
 */
-int height(TreeNode *root)//Ê¹ÓÃµİ¹é·½·¨Çó½âÊ÷µÄ¸ß¶È
+int height(TreeNode *root)//ä½¿ç”¨é€’å½’æ–¹æ³•æ±‚è§£æ ‘çš„é«˜åº¦
 {
     if( root== NULL)
 		return 0;
@@ -217,23 +217,23 @@ int height(TreeNode *root)//Ê¹ÓÃµİ¹é·½·¨Çó½âÊ÷µÄ¸ß¶È
 		return left;
 }
 /*
-	ÅĞ¶ÏÊ÷ÊÇ·ñÎªÆ½ºâ¶ş²æÊ÷
+	åˆ¤æ–­æ ‘æ˜¯å¦ä¸ºå¹³è¡¡äºŒå‰æ ‘
 */
 bool isBalanced(TreeNode *root) 
 {
     if(!root)
 		return true;
-    int left = height(root->left);//Çó×ó×ÓÊ÷µÄ¸ß¶È
-    int right = height(root->right);//ÇóÓÒ×ÓÊ÷µÄ¸ß¶È
-    if(abs(left-right)<=1)//Èç¹û¸ß¶È²î²»´óÓÚ1£¬Ôò¼ÌĞøÅĞ¶ÏÆä×ó×ÓÊ÷ºÍÓÒ×ÓÊ÷
+    int left = height(root->left);//æ±‚å·¦å­æ ‘çš„é«˜åº¦
+    int right = height(root->right);//æ±‚å³å­æ ‘çš„é«˜åº¦
+    if(abs(left-right)<=1)//å¦‚æœé«˜åº¦å·®ä¸å¤§äº1ï¼Œåˆ™ç»§ç»­åˆ¤æ–­å…¶å·¦å­æ ‘å’Œå³å­æ ‘
 		return isBalanced(root->left)&&isBalanced(root->right);
     else
-        return false;//·ñÔò·µ»Øfalse
+        return false;//å¦åˆ™è¿”å›false
 }
 
 /*
-	°´²ã±éÀú£º
-	·Çµİ¹é´¦Àí£¬ÅäºÏ¶ÓÁĞÀ´Íê³É
+	æŒ‰å±‚éå†ï¼š
+	éé€’å½’å¤„ç†ï¼Œé…åˆé˜Ÿåˆ—æ¥å®Œæˆ
 */
 vector<vector<int> > LevelOrderTraverse_rec(TreeNode * root)
 {
@@ -243,12 +243,12 @@ vector<vector<int> > LevelOrderTraverse_rec(TreeNode * root)
 	
 	int count = 1,i=0;
 	int cnt = 0;
-	//root==NULLµÄÇé¿ö
+	//root==NULLçš„æƒ…å†µ
 	if(!root)
 		return res;
 	ique.push(root);
-	ique.push(NULL);//ÓÃNULLÀ´·Ö¸î²ã£¬Ãî£¡
-	while(!ique.empty()){//Ñ­»·È¡¶ÓÁĞÍ·
+	ique.push(NULL);//ç”¨NULLæ¥åˆ†å‰²å±‚ï¼Œå¦™ï¼
+	while(!ique.empty()){//å¾ªç¯å–é˜Ÿåˆ—å¤´
 		root = ique.front();
 		ique.pop();
 		if(root){
@@ -265,11 +265,14 @@ vector<vector<int> > LevelOrderTraverse_rec(TreeNode * root)
 			}
 		}
 	}
-	//ÄæĞò
+	//é€†åº
 	reverse(res.begin(),res.end());
 
 	return res;
 }
+
+
+
 TreeNode * root = NULL;
 int main()
 {
@@ -277,26 +280,26 @@ int main()
 	int i=0,j=0;
 
 	CreateTree(&root);
-	cout<<"ºóĞò±éÀú"<<endl;
-	PostOrderTraverse_rec(root);//ºóĞò±éÀú
-	cout<<endl<<"ÏÈĞò±éÀú"<<endl;
-	PreOrderTraverse_rec(root);//ÏÈĞò±éÀú
-	cout<<endl<<"ÖĞĞò±éÀú"<<endl;
-	InOrderTraverse_rec(root);//ÖĞĞò±éÀú
+	cout<<"ååºéå†"<<endl;
+	PostOrderTraverse_rec(root);//ååºéå†
+	cout<<endl<<"å…ˆåºéå†"<<endl;
+	PreOrderTraverse_rec(root);//å…ˆåºéå†
+	cout<<endl<<"ä¸­åºéå†"<<endl;
+	InOrderTraverse_rec(root);//ä¸­åºéå†
 
-	ivec = PreOrderTraverse(root);//ÏÈĞò±éÀú
+	ivec = PreOrderTraverse(root);//å…ˆåºéå†
 	vector<int>::iterator it = ivec.begin();
-	cout<<endl<<"·Çµİ¹éµÄÏÈĞò±éÀú"<<endl;
+	cout<<endl<<"éé€’å½’çš„å…ˆåºéå†"<<endl;
 	for(;it != ivec.end();++it)
 		cout<<(char)*it<<"->";
 	ivec = InOrderTraverse(root);
 	it = ivec.begin();
-	cout<<endl<<"·Çµİ¹éµÄÖĞĞò±éÀú"<<endl;
+	cout<<endl<<"éé€’å½’çš„ä¸­åºéå†"<<endl;
 	for(;it != ivec.end();++it)
 		cout<<(char)*it<<"->";
 	ivec = PostOrderTraverse(root);
 	it = ivec.begin();
-	cout<<endl<<"·Çµİ¹éµÄºóĞò±éÀú"<<endl;
+	cout<<endl<<"éé€’å½’çš„ååºéå†"<<endl;
 	for(;it != ivec.end();++it)
 		cout<<(char)*it<<"->";
 	cout<<endl<<isBalanced(root)<<endl;
@@ -313,7 +316,7 @@ int main()
 	for(i=0;i<len;++i)
 		ivec.push_back(a[i]);
 	root = sortedArrayToBST(ivec);
-	PreOrderTraverse_rec(root);//ÏÈĞò±éÀú
+	PreOrderTraverse_rec(root);//å…ˆåºéå†
 	#endif
 	fflush(stdin);
 	getchar();
