@@ -1,7 +1,9 @@
 /*
-	ÎÄ¼şÃèÊö£º
-	µ¥Á´±íµÄÒ»Ğ©³£ÓÃº¯Êı¼¯ºÏ£¬±¾ÎÄ¼şÖ÷ÒªÊµÏÖÁËµ¥Á´±íµÄ²åÈë£¬¹¹½¨£¬´òÓ¡µÈº¯Êı
-	ÁíÍâ£¬Ôö¼ÓÁËµ¥Á´±í²éÕÒµ¹ÊıµÚk¸ö½Úµã¹¦ÄÜ,ÆäÖĞ¶¨ÒåÁ´±íµÄµ¹ÊıµÚ0¸öÖ¸ÕëÎªÎ²Ö¸Õë
+	æ–‡ä»¶æè¿°ï¼š
+	å•é“¾è¡¨çš„ä¸€äº›å¸¸ç”¨å‡½æ•°é›†åˆï¼Œæœ¬æ–‡ä»¶ä¸»è¦å®ç°äº†å•é“¾è¡¨çš„æ’å…¥ï¼Œæ„å»ºï¼Œæ‰“å°ç­‰å‡½æ•°
+	å¦å¤–ï¼Œå¢åŠ äº†å•é“¾è¡¨æŸ¥æ‰¾å€’æ•°ç¬¬kä¸ªèŠ‚ç‚¹åŠŸèƒ½,å…¶ä¸­å®šä¹‰é“¾è¡¨çš„å€’æ•°ç¬¬0ä¸ªæŒ‡é’ˆä¸ºå°¾æŒ‡é’ˆ
+
+	å•é“¾è¡¨æ²¡æœ‰å¤´ç»“ç‚¹
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -11,25 +13,25 @@
 typedef int ElementType;
 
 struct ListNode{
-	ElementType val;//½ÚµãÖµ
-	struct ListNode *next;//µ¥Á´±í£¬nextÖ¸Õë
+	ElementType val;//èŠ‚ç‚¹å€¼
+	struct ListNode *next;//å•é“¾è¡¨ï¼ŒnextæŒ‡é’ˆ
 };
 
 struct ListNode *head ;
 /*
-	º¯Êı¹¦ÄÜ£ºÁ´±íµÄ³õÊ¼»¯
-	²ÎÊıËµÃ÷£º
-	@head£ºµ¥Á´±íÍ·µÄÖ¸ÕëµØÖ·
+	å‡½æ•°åŠŸèƒ½ï¼šé“¾è¡¨çš„åˆå§‹åŒ–
+	å‚æ•°è¯´æ˜ï¼š
+	@headï¼šå•é“¾è¡¨å¤´çš„æŒ‡é’ˆåœ°å€
 */
 void ListInit(struct ListNode **head)
 {
 	*head = NULL;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÍ·²å·¨£¬ÔÚ½ÚµãpËùÖ¸ÏòµÄµØ·½²åÈëÒ»¸öÖµÎªvalµÄ½Úµã
-	²ÎÊıËµÃ÷£º
-	@p£ºÒª²åÈëµÄ½ÚµãÖ¸Õë
-	@val£ºÔªËØÖµ
+	å‡½æ•°åŠŸèƒ½ï¼šå¤´æ’æ³•ï¼Œåœ¨èŠ‚ç‚¹pæ‰€æŒ‡å‘çš„åœ°æ–¹æ’å…¥ä¸€ä¸ªå€¼ä¸ºvalçš„èŠ‚ç‚¹
+	å‚æ•°è¯´æ˜ï¼š
+	@pï¼šè¦æ’å…¥çš„èŠ‚ç‚¹æŒ‡é’ˆ
+	@valï¼šå…ƒç´ å€¼
 */
 ListNode* ListInsert(struct ListNode *p,ElementType val)
 {
@@ -41,10 +43,10 @@ ListNode* ListInsert(struct ListNode *p,ElementType val)
 }
 
 /*
-	º¯Êı¹¦ÄÜ£º²åÈë½Úµã
-	²ÎÊıËµÃ÷£º
-	@p£ºÒª²åÈëµÄÎ»ÖÃ
-	@insert£ºÒª²åÈëµÄ½ÚµãÖ¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šæ’å…¥èŠ‚ç‚¹
+	å‚æ•°è¯´æ˜ï¼š
+	@pï¼šè¦æ’å…¥çš„ä½ç½®
+	@insertï¼šè¦æ’å…¥çš„èŠ‚ç‚¹æŒ‡é’ˆ
 */
 void ListInsertList(struct ListNode *p,struct ListNode *insert)
 {
@@ -53,16 +55,16 @@ void ListInsertList(struct ListNode *p,struct ListNode *insert)
 		p = insert;
 	else{
 		tmp = insert;
-		while(tmp->next != NULL)//Ñ°ÕÒinsertÆğÊ¼µÄÎ²½ÚµãÖ¸Õë
+		while(tmp->next != NULL)//å¯»æ‰¾insertèµ·å§‹çš„å°¾èŠ‚ç‚¹æŒ‡é’ˆ
 			tmp =  tmp->next;
-		tmp->next = p->next;//Á´½Óµ½p->next´¦
-		p->next = insert;//Á´½Óp->nextµ½insert
+		tmp->next = p->next;//é“¾æ¥åˆ°p->nextå¤„
+		p->next = insert;//é“¾æ¥p->nextåˆ°insert
 	}
 }
 /*
-	º¯Êı¹¦ÄÜ£ºµ¥Á´±íµÄ¾ÍµØÄæÖÃ
-	²ÎÊıËµÃ÷£º
-	@head£ºµ¥Á´±íµÄÍ·Ö¸Õë
+	å‡½æ•°åŠŸèƒ½ï¼šå•é“¾è¡¨çš„å°±åœ°é€†ç½®
+	å‚æ•°è¯´æ˜ï¼š
+	@headï¼šå•é“¾è¡¨çš„å¤´æŒ‡é’ˆ
 */
 void ListRevert(struct ListNode **head)
 {
@@ -70,17 +72,17 @@ void ListRevert(struct ListNode **head)
 
 	while(p->next != NULL){
 		tmp = p;
-		tmp = tmp->next;//¼ÇÂ¼ÏÂÏÂÒ»¸öÖ¸Õë
-		p ->next = last;//½«µ±Ç°½ÚµãÖ¸ÏòlastÖ¸Õë
-		last = p;//¸üĞÂlastÖ¸Õë
-		p = tmp;//¸üĞÂpÖ¸Õë
+		tmp = tmp->next;//è®°å½•ä¸‹ä¸‹ä¸€ä¸ªæŒ‡é’ˆ
+		p ->next = last;//å°†å½“å‰èŠ‚ç‚¹æŒ‡å‘lastæŒ‡é’ˆ
+		last = p;//æ›´æ–°lastæŒ‡é’ˆ
+		p = tmp;//æ›´æ–°pæŒ‡é’ˆ
 	}
-	p->next = last;//´¦ÀíÎ²Ö¸Õë
-	last = p;//¸üĞÂ
-	*head = last;//½«ĞÂµÄÍ·Ö¸Õë¸³Öµ¸ø*headÖ¸Õë
+	p->next = last;//å¤„ç†å°¾æŒ‡é’ˆ
+	last = p;//æ›´æ–°
+	*head = last;//å°†æ–°çš„å¤´æŒ‡é’ˆèµ‹å€¼ç»™*headæŒ‡é’ˆ
 }
 /*
-	º¯Êı¹¦ÄÜ£º´òÓ¡µ¥Á´±í
+	å‡½æ•°åŠŸèƒ½ï¼šæ‰“å°å•é“¾è¡¨
 */
 void PrintList(struct ListNode *head)
 {
@@ -92,24 +94,24 @@ void PrintList(struct ListNode *head)
 	printf("\n");
 }
 /*
-	º¯Êı¹¦ÄÜ£º¹¹½¨µ¥Á´±í
-	²ÎÊıËµÃ÷£º
-	@head£ºµ¥Á´±íÍ·Ö¸ÕëµØÖ·
-	@a£ºÊı¾İÔªËØÊı×éÖ¸Õë
-	@len£ºÔªËØ¸öÊı
+	å‡½æ•°åŠŸèƒ½ï¼šæ„å»ºå•é“¾è¡¨
+	å‚æ•°è¯´æ˜ï¼š
+	@headï¼šå•é“¾è¡¨å¤´æŒ‡é’ˆåœ°å€
+	@aï¼šæ•°æ®å…ƒç´ æ•°ç»„æŒ‡é’ˆ
+	@lenï¼šå…ƒç´ ä¸ªæ•°
 */
 void buildList(struct ListNode **head,ElementType * a,int len)
 {
 	int i = 0;
-	ListInit(head);//³õÊ¼»¯Á´±í
+	ListInit(head);//åˆå§‹åŒ–é“¾è¡¨
 	for(i=0;i<len;++i)
-		*head = ListInsert(*head,a[i]);//Ê¹ÓÃÍ·²å·¨½«Êı¾İ²åÈëÁ´±í
+		*head = ListInsert(*head,a[i]);//ä½¿ç”¨å¤´æ’æ³•å°†æ•°æ®æ’å…¥é“¾è¡¨
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÑ°ÕÒµ¥Á´±íµÄµ¹ÊıµÚk¸ö½Úµã£¬²¢Êä³ö´Ë½ÚµãÖµ
-	²ÎÊıËµÃ÷£º
-	@heaed£ºÁ´±íµÄÍ·Ö¸Õë
-	@k£ºµ¹ÊıµÚk¸ö½Úµã
+	å‡½æ•°åŠŸèƒ½ï¼šå¯»æ‰¾å•é“¾è¡¨çš„å€’æ•°ç¬¬kä¸ªèŠ‚ç‚¹ï¼Œå¹¶è¾“å‡ºæ­¤èŠ‚ç‚¹å€¼
+	å‚æ•°è¯´æ˜ï¼š
+	@heaedï¼šé“¾è¡¨çš„å¤´æŒ‡é’ˆ
+	@kï¼šå€’æ•°ç¬¬kä¸ªèŠ‚ç‚¹
 */
 ListNode* SearchKelem(ListNode*head,int k)
 {
@@ -119,26 +121,26 @@ ListNode* SearchKelem(ListNode*head,int k)
 	p2 = head;
 	for(i=0;p2->next!=NULL&&i<k;++i)
 		p2 = p2->next ;
-	if(i==k){//Èç¹ûkÖµ´óÓÚµÈÓÚÁ´±íµÄÔªËØ¸öÊı
+	if(i==k){//å¦‚æœkå€¼å¤§äºç­‰äºé“¾è¡¨çš„å…ƒç´ ä¸ªæ•°
 		while(p2->next!=NULL){
 			p2 = p2->next ;
 			p1 = p1->next;
 		}
 		return p1;
-	}else//Èç¹ûkĞ¡ÓÚÁ´±íµÄÔªËØ¸öÊıÔòÊä³öNULL
+	}else//å¦‚æœkå°äºé“¾è¡¨çš„å…ƒç´ ä¸ªæ•°åˆ™è¾“å‡ºNULL
 		return NULL;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÅĞ¶ÏÏà½»Á½¸öÁ´±íµÄµÚÒ»¸öÏà½»½Úµã£¬ÔİÊ±¼ÙÉèÁ´±í¾ùÎªÎŞ»·Á´±í
-	²ÎÊıËµÃ÷£º
-	@head1£ºÁ´±í1
-	@head2£ºÁ´±í2
+	å‡½æ•°åŠŸèƒ½ï¼šåˆ¤æ–­ç›¸äº¤ä¸¤ä¸ªé“¾è¡¨çš„ç¬¬ä¸€ä¸ªç›¸äº¤èŠ‚ç‚¹ï¼Œæš‚æ—¶å‡è®¾é“¾è¡¨å‡ä¸ºæ— ç¯é“¾è¡¨
+	å‚æ•°è¯´æ˜ï¼š
+	@head1ï¼šé“¾è¡¨1
+	@head2ï¼šé“¾è¡¨2
 */
 struct ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
 {
 	int k = 0,i =0,j=0;
 	struct ListNode *p1 = head1,*p2 = head2,*shortp=NULL,*longp=NULL;
-	//¼ÆËãÁ´±í1ºÍ2µÄ³¤¶È
+	//è®¡ç®—é“¾è¡¨1å’Œ2çš„é•¿åº¦
 	while(p1 != NULL){
 		p1 = p1->next;
 		++i;
@@ -147,7 +149,7 @@ struct ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
 		p2 = p2->next;
 		++j;
 	}
-	//Ê¹ÓÃshortpÖ¸Ïò½Ï¶ÌµÄÁ´±í£¬longpÖ¸Ïò½Ï³¤µÄÁ´±í
+	//ä½¿ç”¨shortpæŒ‡å‘è¾ƒçŸ­çš„é“¾è¡¨ï¼ŒlongpæŒ‡å‘è¾ƒé•¿çš„é“¾è¡¨
 	if(i>j){
 		k = i-j;
 		shortp = head2;
@@ -157,41 +159,41 @@ struct ListNode *getFirstNode(struct ListNode * head1,struct ListNode *head2)
 		shortp = head1;
 		longp = head2;
 	}
-	//½Ï³¤µÄÁ´±í×ßk²½
+	//è¾ƒé•¿çš„é“¾è¡¨èµ°kæ­¥
 	while(k--)
 		longp = longp->next;
-	//²éÕÒµÚÒ»¸öÏà½»µÄ½Úµã£¬Èç¹ûÖ¸ÕëÏàÍ¬ÔòÍË³öÑ­»·
+	//æŸ¥æ‰¾ç¬¬ä¸€ä¸ªç›¸äº¤çš„èŠ‚ç‚¹ï¼Œå¦‚æœæŒ‡é’ˆç›¸åŒåˆ™é€€å‡ºå¾ªç¯
 	while((longp!=NULL) && (shortp!=NULL) && (longp!=shortp)){
 		longp = longp->next;
 		shortp = shortp->next;
 	}
-	//ÕÒµ½Ôò·µ»Ø£¬·ñÔòÍË³ö
+	//æ‰¾åˆ°åˆ™è¿”å›ï¼Œå¦åˆ™é€€å‡º
 	if((longp!=NULL) && (shortp!=NULL) && (longp==shortp))
 		return shortp;
 	else
 		return NULL;
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÅĞ¶ÏÁ´±íÊÇ·ñÓĞ»·
-	²ÎÊıËµÃ÷£º
-	@head£ºÁ´±íµÄÍ·Ö¸Õë
-	@node£º·µ»ØµÄ»·Á´±íÏàÓö½Úµã
-	·µ»ØÖµ£º
-	true±íÊ¾Á´±íÖĞÓĞ»·
-	false±íÊ¾Á´±íÖĞÎŞ»·
+	å‡½æ•°åŠŸèƒ½ï¼šåˆ¤æ–­é“¾è¡¨æ˜¯å¦æœ‰ç¯
+	å‚æ•°è¯´æ˜ï¼š
+	@headï¼šé“¾è¡¨çš„å¤´æŒ‡é’ˆ
+	@nodeï¼šè¿”å›çš„ç¯é“¾è¡¨ç›¸é‡èŠ‚ç‚¹
+	è¿”å›å€¼ï¼š
+	trueè¡¨ç¤ºé“¾è¡¨ä¸­æœ‰ç¯
+	falseè¡¨ç¤ºé“¾è¡¨ä¸­æ— ç¯
 */
 bool isCircleList(struct ListNode *head,struct ListNode **node)
 {
 	assert(head != NULL);
 	struct ListNode * low = head, *fast = head;
 	do{
-		low = low->next;//lowÃ¿´Î×ß1²½
-		fast = fast->next;//fastÃ¿´Î×ß2²½
+		low = low->next;//lowæ¯æ¬¡èµ°1æ­¥
+		fast = fast->next;//fastæ¯æ¬¡èµ°2æ­¥
 		if(fast != NULL)
 			fast = fast->next;
 	}while(low!=NULL && fast!=NULL && low != fast);
 	if(low!=NULL && fast!=NULL && low == fast){
-		*node = low;//·µ»ØÏàÓöµãÖ¸Õë
+		*node = low;//è¿”å›ç›¸é‡ç‚¹æŒ‡é’ˆ
 		return true;
 	}else{
 		*node = NULL;	
@@ -199,11 +201,11 @@ bool isCircleList(struct ListNode *head,struct ListNode **node)
 	}
 }
 /*
-	º¯Êı¹¦ÄÜ£ºÈç¹ûÒ»¸öÁ´±íÖĞ´æÔÚ»·£¬¼ì²â»·µÄÈë¿Úµã
-	²ÎÊıËµÃ÷£º
-	@head£ºÁ´±íµÄÍ·Ö¸Õë
-	·µ»ØÖµ£º
-	ÓĞ»·Á´±íµÄÈë¿Úµã£¬»òÕßNULL(µ±Á´±íÖĞ²»´æÔÚ»·Ê±)
+	å‡½æ•°åŠŸèƒ½ï¼šå¦‚æœä¸€ä¸ªé“¾è¡¨ä¸­å­˜åœ¨ç¯ï¼Œæ£€æµ‹ç¯çš„å…¥å£ç‚¹
+	å‚æ•°è¯´æ˜ï¼š
+	@headï¼šé“¾è¡¨çš„å¤´æŒ‡é’ˆ
+	è¿”å›å€¼ï¼š
+	æœ‰ç¯é“¾è¡¨çš„å…¥å£ç‚¹ï¼Œæˆ–è€…NULL(å½“é“¾è¡¨ä¸­ä¸å­˜åœ¨ç¯æ—¶)
 */
 struct ListNode *getCircleEntry( struct ListNode* head)
 {
@@ -215,11 +217,11 @@ struct ListNode *getCircleEntry( struct ListNode* head)
 		if(fast != NULL)
 			fast = fast->next;
 	}while(low!=NULL && fast!=NULL && low != fast);
-	if(low!=NULL && fast!=NULL && low == fast)//ÏàÓöµã
+	if(low!=NULL && fast!=NULL && low == fast)//ç›¸é‡ç‚¹
 		meet = fast;
-	else//ÎŞ»·£¬ÍË³ö
+	else//æ— ç¯ï¼Œé€€å‡º
 		return NULL;
-	//lowÖ¸ÕëÖ¸ÏòÍ·£¬meetÖ¸ÏòÏàÓöµã£¬µ¥²½×ß£¬ÏàÓöµÄµÚÒ»¸ö½Úµã¾ÍÊÇ»·µÄÈë¿Úµã
+	//lowæŒ‡é’ˆæŒ‡å‘å¤´ï¼ŒmeetæŒ‡å‘ç›¸é‡ç‚¹ï¼Œå•æ­¥èµ°ï¼Œç›¸é‡çš„ç¬¬ä¸€ä¸ªèŠ‚ç‚¹å°±æ˜¯ç¯çš„å…¥å£ç‚¹
 	low = head;
 	while(low != meet){
 		low = low->next ;
@@ -228,58 +230,58 @@ struct ListNode *getCircleEntry( struct ListNode* head)
 	return low;
 }
 /*
-	º¯Êı¹¦ÄÜ£º¼ì²âÁ½¸öÁ´±íÊÇ·ñÏà½»(ÈÎÒâµ¥Á´±í£¬¿ÉÒÔ´æÔÚ»·)
-	²ÎÊıËµÃ÷£º
-	@head1£ºÁ´±í1
-	@head2£ºÁ´±í2
+	å‡½æ•°åŠŸèƒ½ï¼šæ£€æµ‹ä¸¤ä¸ªé“¾è¡¨æ˜¯å¦ç›¸äº¤(ä»»æ„å•é“¾è¡¨ï¼Œå¯ä»¥å­˜åœ¨ç¯)
+	å‚æ•°è¯´æ˜ï¼š
+	@head1ï¼šé“¾è¡¨1
+	@head2ï¼šé“¾è¡¨2
 */
 bool isCrossed(ListNode*head1,ListNode*head2)
 {
 	bool f1=false,f2=false,flag = false;
 	struct ListNode * first = NULL,*second = NULL,*tmp = NULL;
-	int i = 0, len = 0;//len±íÊ¾»·Á´±íµÄ³¤¶È
+	int i = 0, len = 0;//lenè¡¨ç¤ºç¯é“¾è¡¨çš„é•¿åº¦
 	assert(head1 != NULL && head2 != NULL);
-	if(head1 ==  head2)//ÅĞ¶ÏÍ¬Ò»¸öÁ´±íµÄÇé¿ö
+	if(head1 ==  head2)//åˆ¤æ–­åŒä¸€ä¸ªé“¾è¡¨çš„æƒ…å†µ
 		return true;
-	//1.ÅĞ¶ÏÁ´±íÊÇ·ñÓĞ»·
+	//1.åˆ¤æ–­é“¾è¡¨æ˜¯å¦æœ‰ç¯
 	f1 = isCircleList(head1,&first);
 	f2 = isCircleList(head2,&second);
-	//2.Èô¾ùÓĞ»·£¬ÔòÕÒµ½ÏàÓöµã£¬È»ºóÔÚhead2ÖĞ²éÕÒÊÇ·ñ´æÔÚ´Ë½Úµã£¬Èô²»´æÔÚÔò·µ»Ø
+	//2.è‹¥å‡æœ‰ç¯ï¼Œåˆ™æ‰¾åˆ°ç›¸é‡ç‚¹ï¼Œç„¶ååœ¨head2ä¸­æŸ¥æ‰¾æ˜¯å¦å­˜åœ¨æ­¤èŠ‚ç‚¹ï¼Œè‹¥ä¸å­˜åœ¨åˆ™è¿”å›
 	if(f1 && f2){
-		//¼ì²âfirstÖ¸ÕëÊÇ·ñÊôÓÚÁ´±í2ÖĞ
-		//»ñµÃ»·µÄÈë¿Úµã
+		//æ£€æµ‹firstæŒ‡é’ˆæ˜¯å¦å±äºé“¾è¡¨2ä¸­
+		//è·å¾—ç¯çš„å…¥å£ç‚¹
 		tmp = getCircleEntry(head2);
 		second = tmp;
-		//´Ó»·µÄÈë¿Úµã¿ªÊ¼ÅĞ¶ÏÏàÓöµãÊÇ·ñÊôÓÚhead2Á´±íÖĞ
-		//tmp != second±íÊ¾Î´µ½ÏàÓö½Úµã,tmp != first±íÊ¾Î´ÕÒµ½ÏàÓöµã
+		//ä»ç¯çš„å…¥å£ç‚¹å¼€å§‹åˆ¤æ–­ç›¸é‡ç‚¹æ˜¯å¦å±äºhead2é“¾è¡¨ä¸­
+		//tmp != secondè¡¨ç¤ºæœªåˆ°ç›¸é‡èŠ‚ç‚¹,tmp != firstè¡¨ç¤ºæœªæ‰¾åˆ°ç›¸é‡ç‚¹
 		while((flag == false || tmp != second) && tmp != first){
-			flag = true;//ÉèÖÃ±êÖ¾Î»
+			flag = true;//è®¾ç½®æ ‡å¿—ä½
 			tmp = tmp ->next;
 		}//while
 		if(tmp == first)
 			return true;
 		else
 			return false;
-	}else if(f1==false && f2==false){//3.ÈôÎŞ»·£¬²éÕÒµ½×îºóÒ»¸ö½ÚµãÊÇ·ñÖ¸ÏòÏàÍ¬µÄ½Úµã
+	}else if(f1==false && f2==false){//3.è‹¥æ— ç¯ï¼ŒæŸ¥æ‰¾åˆ°æœ€åä¸€ä¸ªèŠ‚ç‚¹æ˜¯å¦æŒ‡å‘ç›¸åŒçš„èŠ‚ç‚¹
 		first = head1;
 		second = head2;
-		//ÕÒÁ½¸öÁ´±íµÄÎ²Ö¸Õë
+		//æ‰¾ä¸¤ä¸ªé“¾è¡¨çš„å°¾æŒ‡é’ˆ
 		while(first->next != NULL)
 			first = first->next;
 		while(second->next != NULL)
 			second = second->next;
-		//ÅĞ¶ÏÎ²Ö¸ÕëÊÇ·ñÏàÍ¬£¬ÏàÍ¬Ôò·µ»Øtrue
+		//åˆ¤æ–­å°¾æŒ‡é’ˆæ˜¯å¦ç›¸åŒï¼Œç›¸åŒåˆ™è¿”å›true
 		if(first == second)
 			return true;
 		else
 			return false;
 	}else
-		return false;//ÆäËûÇé¿ö£¨Ò»¸öÓĞ»·£¬Ò»¸öÎŞ»·£©·µ»Øfalse
+		return false;//å…¶ä»–æƒ…å†µï¼ˆä¸€ä¸ªæœ‰ç¯ï¼Œä¸€ä¸ªæ— ç¯ï¼‰è¿”å›false
 }
 
 /*
-	LettcodeÌâÄ¿£º
-	É¾³ıË³ĞòÁ´±íÖĞµÄÖØ¸´ÔªËØ
+	Lettcodeé¢˜ç›®ï¼š
+	åˆ é™¤é¡ºåºé“¾è¡¨ä¸­çš„é‡å¤å…ƒç´ 
 
 */
 ListNode *deleteDuplicates(ListNode *head) 
@@ -289,7 +291,7 @@ ListNode *deleteDuplicates(ListNode *head)
 		return NULL;
 	fast = head->next;
 	while(fast != NULL){
-		while(fast != NULL && low->val == fast->val){//Á¬ĞøÉ¾³ıÖØ¸´ÔªËØ
+		while(fast != NULL && low->val == fast->val){//è¿ç»­åˆ é™¤é‡å¤å…ƒç´ 
 			low->next = fast->next;
 			fast = fast->next;
 		}
@@ -302,8 +304,8 @@ ListNode *deleteDuplicates(ListNode *head)
 	return head;
 }
 /*
-	ÌâÄ¿ÃèÊö£º
-	ºÏ²¢Á½¸öÓĞĞòÁ´±í
+	é¢˜ç›®æè¿°ï¼š
+	åˆå¹¶ä¸¤ä¸ªæœ‰åºé“¾è¡¨
 */
 ListNode *mergeTwoLists(ListNode *l1, ListNode *l2) 
 {
@@ -355,12 +357,12 @@ ListNode *mergeTwoLists(ListNode *l1, ListNode *l2)
 
 ListNode *swapPairs(ListNode *head) 
 {
-	   ListNode *p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL;//p4Ö¸ÕëÓÃÓÚ±£´æÁ½¸ö½ÚµãµÄºóÒ»¸ö£¬ÒÔ±ãÁ¬½Ó¶à¸öpair¶Ô
+	   ListNode *p1=NULL,*p2=NULL,*p3=NULL,*p4=NULL;//p4æŒ‡é’ˆç”¨äºä¿å­˜ä¸¤ä¸ªèŠ‚ç‚¹çš„åä¸€ä¸ªï¼Œä»¥ä¾¿è¿æ¥å¤šä¸ªpairå¯¹
     	if(head == NULL || head->next == NULL)
     		return head;
     	p1 = head;
     	p2 = head->next ;
-    	p3 = p2;//±£´æ½á¹ûÁ´±íµÄÆğÊ¼µØÖ·
+    	p3 = p2;//ä¿å­˜ç»“æœé“¾è¡¨çš„èµ·å§‹åœ°å€
 		ListNode *tmp = 0;
 		
     	while(p1 != NULL && p2 != NULL){
@@ -368,18 +370,53 @@ ListNode *swapPairs(ListNode *head)
     		p2->next = p1;
 			tmp = p1;
 			p1 =  p2;
-			p2 = tmp;//½»»»Á½¸öÖ¸Õë
+			p2 = tmp;//äº¤æ¢ä¸¤ä¸ªæŒ‡é’ˆ
 			if(p4)
-				p4->next = p1;//Á¬½ÓÁ½¸öpair¶Ô
-			p4 = p2;//¼ÇÂ¼ĞÂµÄpair¶ÔÎ»ÖÃ
+				p4->next = p1;//è¿æ¥ä¸¤ä¸ªpairå¯¹
+			p4 = p2;//è®°å½•æ–°çš„pairå¯¹ä½ç½®
 			if(p2->next){
-				p2 = p2->next->next;//¸üĞÂ½Úµã
+				p2 = p2->next->next;//æ›´æ–°èŠ‚ç‚¹
 				p1 = p1->next->next;
 			}else
 				p2 = p2->next;
     	}
         return p3; 
 }
+
+/*
+	é˜¿é‡Œå·´å·´2014ç³»ç»Ÿå·¥ç¨‹å¸ˆç¬”è¯•é¢˜ç›®ï¼Œä¸å®šé¡¹é€‰æ‹©é¢˜
+
+*/
+#if 0
+ListNode* reverse_list(ListNode* head)
+{
+     ListNode* n=head;
+     ListNode* m = NULL;
+     head=NULL;
+     while(n){
+ 		m=n; 
+ 		n=n->next; 
+ 		m->next=head; 
+ 		head=m;
+     }
+     return head;
+}
+ListNode* reverse_list(ListNode* head)
+{
+     ListNode* n=head;
+     ListNode* m = NULL;
+     head=NULL;
+     while(n){
+ 		m=n->next; 
+		n->next=head; 
+		head=n;
+		n=m; 
+     }
+     return head;
+}
+#endif
+
+
 struct ListNode * head2 = NULL,*head3 = NULL,*head4 = NULL,*head5 = NULL,*head6 = NULL,*head7=NULL,*head8=NULL,*head9=NULL;
 int main()
 {
@@ -399,7 +436,7 @@ int main()
 	int len = sizeof(a)/sizeof(a[0]);
 	buildList(&head,a,len);
 	PrintList(head);
-	printf("ÇëÊäÈëµ¹ÊıµÚk¸ö½Úµã,k=");
+	printf("è¯·è¾“å…¥å€’æ•°ç¬¬kä¸ªèŠ‚ç‚¹,k=");
 	scanf("%d",&k);
 	
 	p = SearchKelem(head,k);
@@ -417,7 +454,7 @@ int main()
 	tmp = head2;
 	while(tmp->next !=NULL)
 		tmp = tmp->next;
-	ListInsertList(tmp,p);//¹¹ÔìÏà½»µÄµ¥Á´±íhead1ºÍhead2
+	ListInsertList(tmp,p);//æ„é€ ç›¸äº¤çš„å•é“¾è¡¨head1å’Œhead2
 
 	PrintList(head2);
 
@@ -428,7 +465,7 @@ int main()
 	len = sizeof(c)/sizeof(c[0]);
 	buildList(&head3,c,len);
 	PrintList(head3);
-	tmp = getFirstNode(head,head3);//headºÍhead3²»Ïà½»
+	tmp = getFirstNode(head,head3);//headå’Œhead3ä¸ç›¸äº¤
 	if(tmp != NULL){
 		printf("first node is %d\n",tmp->val);
 	}else{
@@ -440,17 +477,17 @@ int main()
 	tmp = head3;
 	for(i=0;i<4;++i)
 		tmp = tmp->next;
-	while(p->next != NULL)//ÕÒµ½Î²Ö¸Õë
+	while(p->next != NULL)//æ‰¾åˆ°å°¾æŒ‡é’ˆ
 		p = p->next;
-	p->next = tmp;//¹¹Ôì»·1
+	p->next = tmp;//æ„é€ ç¯1
 
-	p = getCircleEntry(head3);//»ñµÃ»·µÄÈë¿Úµã
+	p = getCircleEntry(head3);//è·å¾—ç¯çš„å…¥å£ç‚¹
 	if(p!=NULL)
 		printf("head3 circle Entry is %d\n",p->val);
 	else
 		printf("head3 not circle\n");
 	
-	p = getCircleEntry(head);//»ñµÃ»·µÄÈë¿Úµã
+	p = getCircleEntry(head);//è·å¾—ç¯çš„å…¥å£ç‚¹
 	if(p!=NULL)
 		printf("head circle Entry is %d\n",p->val);
 	else
@@ -466,13 +503,13 @@ int main()
 		printf("head3 not circle\n");	
 
 	len = sizeof(d)/sizeof(d[0]);
-	buildList(&head4,d,len);//¹¹½¨µ¥Á´±í
+	buildList(&head4,d,len);//æ„å»ºå•é“¾è¡¨
 	p = head4;
-	while(p->next!=NULL)//ÕÒµ½Î²Ö¸Õë
+	while(p->next!=NULL)//æ‰¾åˆ°å°¾æŒ‡é’ˆ
 		p = p->next;
 	tmp = head3;
 	for(i=0;i<6;++i)
-		tmp = tmp->next;//Èë¿Úµã+1
+		tmp = tmp->next;//å…¥å£ç‚¹+1
 	p->next = tmp;
 	
 	//PrintList(head4);
@@ -499,24 +536,27 @@ int main()
 	buildList(&head6,f,len);
 	deleteDuplicates(head6);
 	PrintList(head6);
-#if 0
-	len = sizeof(g)/sizeof(g[0]);
-	buildList(&head7,g,len);
 
+	len = sizeof(h)/sizeof(h[0]);
+	buildList(&head7,h,len);
+	PrintList(head7);
+	head7 = reverse_list(head7);
 	PrintList(head7);
 
+#if 0
 	len = sizeof(h)/sizeof(h[0]);
 	buildList(&head8,h,len);
 
 	PrintList(head8);
 	head9=mergeTwoLists(head7,head8);
 	PrintList(head8);
-#endif
+
 	len = sizeof(h)/sizeof(h[0]);
 	buildList(&head8,h,len);
 	PrintList(head8);
 	head7 = swapPairs(head8);
 	PrintList(head7);
+#endif
 	fflush(stdin);
 	getchar();
 }
