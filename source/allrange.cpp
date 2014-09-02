@@ -101,15 +101,20 @@ int main()
 	vector<int>num;
 	int i=1;
 	
-	num.push_back(i);
-	num.push_back(2);
-	num.push_back(2);
+	num.push_back('a');
+	num.push_back('l');
+	num.push_back('i');
+	num.push_back('b');
+	num.push_back('a');
+	num.push_back('b');
+	num.push_back('a');
 	res = permute(num);
 	for(i=0;i<res.size();++i){
 		for(int j=0;j<res[i].size();++j)
 			cout<<res[i][j]<<" ";
 		cout<<endl;
 	}
+	printf("共有%d中不同的排列\n",res.size());
 	fflush(stdin);
 	getchar();
 	return 0;
