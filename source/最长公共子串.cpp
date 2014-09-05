@@ -7,11 +7,13 @@
 /* 最长公共子串 DP */
 static int maxlen  = 0 , maxindex = 0;
 int dp[40][40];
+
 /* 输出LCS
  * 在后缀数组方法中，maxindex=0
  * 因为传进来的就是后缀数组suff[]，从0打印maxlen个字符
 */
-void outputLCS(char * text)
+void 
+outputLCS(char * text)
 {
     if(maxlen == 0)
     {
@@ -60,7 +62,7 @@ LCS_dp(char * text,char * query)
 
 
  
-void main()
+int main()
 {
     char text[] = "acaccbabb";
     char query[] = "acbac";
