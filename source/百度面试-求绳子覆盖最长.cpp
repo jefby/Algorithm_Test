@@ -1,8 +1,6 @@
 #include <stdio.h>
 #define ARRAYMAX 100
 
-
-
 int 
 calcucate(int *array,int pointNum,int coverLen)
 {
