@@ -1,0 +1,19 @@
+/*
+	计数排序实现
+	数组元素不小于1000
+	Author: jefby
+	Email:  jef199006@gmail.com
+*/
+#define MAX 1000
+
+int countSort(int *a,int n)
+{
+	int i = 0;
+	int *count=(int*)malloc(sizeof(int)*MAX);
+	memset(count,0,sizeof(int)*1000);
+	if(n<0||a==NULL)
+		return -1;
+	for(i=0;i<n;++i){
+		if()
+	}
+}
